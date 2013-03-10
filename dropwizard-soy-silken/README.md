@@ -1,6 +1,6 @@
 Dropwizard Soy Silken Bundle
 ============================
-Bundle thats uses Silken, Tofu wrapper to render Soy templates in dropwizard.
+Bundle that uses Silken, Tofu wrapper to render Soy templates in dropwizard.
 
 References:
 -----------
