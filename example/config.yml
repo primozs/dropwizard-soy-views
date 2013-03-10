@@ -1,0 +1,17 @@
+http:
+  rootPath: /api/*
+
+  # The port on which the HTTP server listens for service requests.
+  port: 3333
+
+soyview:
+  #initSilkenServlet: false
+
+  #silkenServletUrl: /soy
+
+  silkenDisableCaching: false
+
+  #silkenSearchPath: /templates
+
+  #globals resolver, default null, set here for globals example
+  silkenCompileTimeGlobalsProvider: si.pgc.soy.example.silken.SilkenCompileTimeGlobalsProvider

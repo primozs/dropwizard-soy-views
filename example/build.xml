@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project name="soy_example" basedir="." default="default">
+
+    <property name="bin.dir"     value="bin" />
+    <property name="src.dir"     value="src" />
+    <property name="resources.dir"     value="${basedir}/src/main/resources" />
+    <property name="templates.dir"     value="${resources.dir}/templates" />
+    <property name="java"     value="java"/>
+    <property name="extractor_jar" value="SoyMsgExtractor.jar" />
+
+    <target name="default">
+        <echo message="xlf extractor ant commands"/>
+        <echo message="*: ant extractor_download" />
+        <echo message="*: ant extract (reqired) -Dns=example/time (optional) -Dslang=en (optional) -Dtlang=sl_SI" />
+        <echo message="(reqired) -Dns=NAMESPACE template namespace dir example: playground/time (note: no leading or trailing slash!)" />
+        <echo message="(optional) -Dslang=LOCALE default source language locale en" />
+        <echo message="(optional) -Dtlang=LOCALE default target language locale sl_SI" />
+
+        <!--
+        <echo message="SoyMsgExtractor Help" />
+        <java jar="${basedir}/${bin.dir}/${extractor_jar}" fork="true"></java>
+        -->
+    </target>
+
+    <target name="extractor_is_present">
+        <available file="${bin.dir}/${extractor_jar}" property="extractor.present"/>
+    </target>
+
+    <target name="extractor_download" depends="extractor_is_present" unless="extractor.present">
+        <mkdir dir="${bin.dir}"/>
+        <get src="http://closure-templates.googlecode.com/files/closure-templates-msg-extractor-latest.zip" dest="${bin.dir}/" verbose="true"/>
+        <unzip src="${bin.dir}/closure-templates-msg-extractor-latest.zip" dest="${bin.dir}"/>
+    </target>
+
+
+    <!--
+        ant extract
+            reqired -Dns=playground/time //some namespace dir in resources/templates (note: no leading or trailing slash!)
+            optional -Dslang=en
+            optional -Dtlang=sl_SI
+
+        examples:
+            ant extract -Dns=playground/time
+            ant extract -Dns=playground/time -Dslang=es
+            ant extract -Dns=playground/time -Dslang=en -Dtlang=sl_SI
+    -->
+    <target name="extract" depends="extractor_download">
+        <property name="ns" value="NO DIR PROVIDED" />  <!-- namespace with no leading or trailing slash! -->
+        <property name="slang" value="en" />        <!-- default source language locale en -->
+        <property name="tlang" value="sl_SI" />     <!-- default target language locale sl_SI -->
+
+        <!-- get soy files for namespace -->
+        <fileset id="soy.fileset" dir="${templates.dir}/${ns}/">
+            <include name="**/*.soy"/>
+        </fileset>
+
+        <!-- convert file paths to relative prefix relative dir -->
+        <pathconvert property="soyfiles" pathsep=" " refid="soy.fileset">
+            <globmapper from="${templates.dir}/*" to="/*" />
+        </pathconvert>
+
+        <!-- echo found soy files  -->
+        <echo message="${soyfiles}"/>
+
+        <java jar="${basedir}/${bin.dir}/${extractor_jar}" fork="true">
+            <arg line="--allowExternalCalls false" />
+            <arg line="--sourceLocaleString ${slang}" />
+            <arg line="--targetLocaleString ${tlang}" />
+
+            <!--<arg line="outputFile ${templates.dir}/test.xlf" />-->
+            <arg line="--outputPathFormat {INPUT_PREFIX}/${ns}/messages.${tlang}.xlf" />
+
+            <arg line="--inputPrefix ${templates.dir}" />
+            <arg line="${soyfiles}" />
+            <!--<arg line="/playground/time/TimeDisplay.soy /playground/time/DateDisplay.soy /playground/time/utc/TimeDisplay.soy" />-->
+        </java>
+    </target>
+
+
+</project>

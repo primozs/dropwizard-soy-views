@@ -1,0 +1,16 @@
+{namespace example}
+/**
+* Product template with stock remaining.
+* @param productName The product name.
+* @param qty The quantity remaining as an int.
+*/
+{template .remaining}
+<tr>
+  <td>{$productName}</td>
+   {if $qty == 0}
+     <td class="nostock">{$qty}</td>
+   {else}
+     <td>{$qty}</td>
+   {/if}
+</tr>
+{/template}

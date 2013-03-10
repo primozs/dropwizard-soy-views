@@ -1,0 +1,22 @@
+{namespace example}
+
+/**
+ * Says hello to the world.
+ *
+ */
+{template .global}
+<html>
+    <head>
+        <title>Rendered Soy Template with global variable (without $ sign)</title>
+    </head>
+    <body>
+        <h1>Rendered Soy Template with global variable (without $ sign)</h1>
+        <p>
+           somevar, global var value (only compile time): {somevar}
+        </p>
+        <p>
+           $ij.someothervar, injected global var value: {$ij.someothervar}
+        </p>
+    </body>
+</html>
+{/template}

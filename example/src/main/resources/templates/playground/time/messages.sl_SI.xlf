@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file original="SoyMsgBundle" datatype="x-soy-msg-bundle" xml:space="preserve" source-language="en" target-language="sl_SI">
+    <body>
+      <trans-unit id="6899410641137821757" datatype="html">
+        <source>Date:</source>
+        <target>Datum:</target>
+        <note priority="1" from="description">Date display message label</note>
+      </trans-unit>
+      <trans-unit id="6945624679413176304" datatype="html">
+        <source>The time variable "now" is:</source>
+        <target>Vrednost časovne spremenljivke "now" je:</target>
+        <note priority="1" from="description">Time description</note>
+      </trans-unit>
+      <trans-unit id="8459601643837769747" datatype="html">
+        <source>Time UTC label:</source>
+        <target>UTC čas oznaka:</target>
+        <note priority="1" from="description">Time UTC label another namespace</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
